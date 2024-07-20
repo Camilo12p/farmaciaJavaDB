@@ -1,3 +1,4 @@
+package com.proyectofarmacia.cliente.adapter.in;
 // package com.proyectofarmacia.cliente.infrastructure.in;
 
 // import java.awt.*;

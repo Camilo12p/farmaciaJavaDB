@@ -1,4 +1,4 @@
-package com.proyectofarmacia.cliente.domain.service;
+package com.proyectofarmacia.cliente.domain.entity.service;
 
 import java.util.List;
 import java.util.Optional;

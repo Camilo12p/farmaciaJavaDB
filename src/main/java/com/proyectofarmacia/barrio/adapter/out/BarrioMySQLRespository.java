@@ -1,4 +1,4 @@
-package com.proyectofarmacia.barrio.infrastructure;
+package com.proyectofarmacia.barrio.adapter.out;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,10 +13,10 @@ import java.util.Properties;
 import com.proyectofarmacia.barrio.domain.entity.Barrio;
 import com.proyectofarmacia.barrio.domain.service.BarrioService;
 
-public class BarrioRepository implements BarrioService{
+public class BarrioMySQLRespository implements BarrioService{
      private Connection connection;
 
-    public BarrioRepository() {
+    public BarrioMySQLRespository() {
         try{
             Properties properties = new Properties();
             properties.load(getClass().getClassLoader().getResourceAsStream("configdb.properties"));

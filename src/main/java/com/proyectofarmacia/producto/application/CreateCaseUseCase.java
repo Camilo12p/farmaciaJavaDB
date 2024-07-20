@@ -1,7 +1,7 @@
 package com.proyectofarmacia.producto.application;
 
 import com.proyectofarmacia.producto.domain.entity.Producto;
-import com.proyectofarmacia.producto.infrastructure.ProductoService;
+import com.proyectofarmacia.producto.domain.entity.service.ProductoService;
 
 public class CreateCaseUseCase {
     private ProductoService productoService;

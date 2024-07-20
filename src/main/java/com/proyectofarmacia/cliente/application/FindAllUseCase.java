@@ -3,7 +3,7 @@ package com.proyectofarmacia.cliente.application;
 import java.util.List;
 
 import com.proyectofarmacia.cliente.domain.entity.Cliente;
-import com.proyectofarmacia.cliente.domain.service.ClienteService;
+import com.proyectofarmacia.cliente.domain.entity.service.ClienteService;
 
 public class FindAllUseCase {
     private ClienteService clienteService;

@@ -1,4 +1,4 @@
-package com.proyectofarmacia.producto.infrastructure;
+package com.proyectofarmacia.producto.domain.entity.service;
 
 import com.proyectofarmacia.producto.domain.entity.Producto;
 

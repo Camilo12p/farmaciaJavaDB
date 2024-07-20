@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.proyectofarmacia.producto.domain.entity.Producto;
-import com.proyectofarmacia.producto.infrastructure.ProductoService;
+import com.proyectofarmacia.producto.domain.entity.service.ProductoService;
 
 public class ProductoMysSQLRepository  implements ProductoService {
     

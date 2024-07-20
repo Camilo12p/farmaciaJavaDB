@@ -1,4 +1,4 @@
-package com.proyectofarmacia.cliente.infrastructure.out;
+package com.proyectofarmacia.cliente.adapter.out;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,15 +14,15 @@ import java.util.Optional;
 import java.util.Properties;
 
 import com.proyectofarmacia.cliente.domain.entity.Cliente;
-import com.proyectofarmacia.cliente.domain.service.ClienteService;
+import com.proyectofarmacia.cliente.domain.entity.service.ClienteService;
 
-public class ClienteRepository implements ClienteService{
+public class ClienteMySQLRepository implements ClienteService{
 
     private Connection connection;
 
 
 
-    public ClienteRepository() {
+    public ClienteMySQLRepository() {
         try{
             Properties properties = new Properties();
             properties.load(getClass().getClassLoader().getResourceAsStream("configdb.properties"));
