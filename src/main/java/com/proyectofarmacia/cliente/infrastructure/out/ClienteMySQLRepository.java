@@ -1,4 +1,4 @@
-package com.proyectofarmacia.cliente.adapter.out;
+package com.proyectofarmacia.cliente.infrastructure.out;
 
 import java.io.IOException;
 import java.sql.Connection;

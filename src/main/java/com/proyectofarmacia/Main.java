@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.xml.crypto.Data;
 
-import com.proyectofarmacia.barrio.adapter.out.BarrioMySQLRespository;
 import com.proyectofarmacia.barrio.application.CreateBarrioUseCase;
 import com.proyectofarmacia.barrio.application.FIndAllBarrioUseCase;
 import com.proyectofarmacia.barrio.domain.entity.Barrio;
 import com.proyectofarmacia.barrio.domain.service.BarrioService;
-import com.proyectofarmacia.cliente.adapter.out.ClienteMySQLRepository;
+import com.proyectofarmacia.barrio.infrastructure.out.BarrioMySQLRespository;
 import com.proyectofarmacia.cliente.domain.entity.Cliente;
 import com.proyectofarmacia.cliente.domain.entity.service.ClienteService;
+import com.proyectofarmacia.cliente.infrastructure.out.ClienteMySQLRepository;
 
 public class Main {
     public static void main(String[] args) {
