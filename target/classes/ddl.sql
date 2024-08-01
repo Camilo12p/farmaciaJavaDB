@@ -70,6 +70,16 @@ CREATE TABLE cliente(
 
 );
 
+ALTER TABLE cliente
+ADD COLUMN email VARCHAR(50),
+ADD COLUMN password VARCHAR(20);
+
+ALTER TABLE cliente
+ADD CONSTRAINT UK_email_cliente UNIQUE (email);
+
+
+
+
 CREATE TABLE unidad_de_medida(
     id INT,
     nombre VARCHAR(25),

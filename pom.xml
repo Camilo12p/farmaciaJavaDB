@@ -14,12 +14,61 @@
     </properties>
 
     <dependencies>
+
+        <!-- esta dependecia me permite la utilizacion 
+        de la base de datos mysql-->
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
 
+        <!-- esta dependecia me permite crear un servidor http-->
+
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- esta dependecia crea funcionalidades para crear 
+        y gestionar un servidor jersey-->
+
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- me permite hacer injeccion de dependencias, aunque no la he usado
+        hasta el momento es necesaria para que sirva-->
+
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- esta dependecia me permite hacer usar los servicios resful, asi como 
+        mapear los endpoints-->
+
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- esta dependecia hace la deserializacion de clase a json-->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+
     </dependencies>
+
+     
 
 </project>
