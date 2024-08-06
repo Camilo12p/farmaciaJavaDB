@@ -16,7 +16,7 @@ public class Config {
                 .register(JacksonFeature.class); // Registrar JacksonFeature
 
         // URI del servidor
-        URI uri = URI.create("http://localhost:8080/myapp");
+        URI uri = URI.create("http://localhost:8080/farmacia");
 
         // Crear e iniciar el servidor
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);

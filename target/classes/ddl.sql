@@ -45,7 +45,9 @@ CREATE TABLE barrio (
     CONSTRAINT fk_idciudad_barrio FOREIGN KEY (id_ciudad) REFERENCES ciudad(id) ON DELETE CASCADE   
 );
 
-CREATE TABLE tipodocumento(
+RENAME TABLE barrio TO direccion;
+
+CREATE TABLE tipo_documento(
     id INT AUTO_INCREMENT,
     nombre VARCHAR(30),
     id_pais INT,
@@ -62,11 +64,11 @@ CREATE TABLE cliente(
     edad TINYINT,
     fecha_nacimiento DATE,
     fecha_creacion DATE DEFAULT (CURDATE()),
-    id_barrio INT,
+    id_direccion INT,
 
     CONSTRAINT pk_id_cliente PRIMARY KEY (id),
-    CONSTRAINT fk_idbarrio_cliente FOREIGN KEY (id_barrio) REFERENCES barrio(id) ON DELETE CASCADE,
-    CONSTRAINT fk_idtdocumento_cliente FOREIGN KEY (id_tipo_documento) REFERENCES tipodocumento(id) ON DELETE CASCADE
+    CONSTRAINT fk_idbarrio_cliente FOREIGN KEY (id_direccion) REFERENCES direccion(id) ON DELETE CASCADE,
+    CONSTRAINT fk_idtdocumento_cliente FOREIGN KEY (id_tipo_documento) REFERENCES tipo_documento(id) ON DELETE CASCADE
 
 );
 

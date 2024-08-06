@@ -14,9 +14,13 @@ import java.util.Optional;
 import java.util.Properties;
 
 import com.proyectofarmacia.cliente.domain.entity.Cliente;
+import com.proyectofarmacia.cliente.domain.entity.dto.ClienteDTO;
+import com.proyectofarmacia.cliente.domain.entity.service.ClienteDTOService;
 import com.proyectofarmacia.cliente.domain.entity.service.ClienteService;
+import com.proyectofarmacia.direccion.domain.entity.Direccion;
+import com.proyectofarmacia.documento.domain.entity.TipoDocumento;
 
-public class ClienteMySQLRepository implements ClienteService{
+public class ClienteMySQLRepository implements ClienteService, ClienteDTOService{
 
     private Connection connection;
 
@@ -44,7 +48,7 @@ public class ClienteMySQLRepository implements ClienteService{
     @Override
     public void crearCliente(Cliente cliente) {
         try{
-            String query = "INSERT INTO cliente (id,id_tipo_documento,nombre,apellido,edad,fecha_nacimiento,fecha_creacion,id_barrio)"+ //
+            String query = "INSERT INTO cliente (id,id_tipo_documento,nombre,apellido,edad,fecha_nacimiento,fecha_creacion,id_direccion)"+ //
                             " VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setLong(1, cliente.getId());
@@ -54,7 +58,7 @@ public class ClienteMySQLRepository implements ClienteService{
             ps.setInt(5, cliente.getEdad());
             ps.setDate(6, Date.valueOf(cliente.getFechaNacimiento()));
             ps.setDate(7, Date.valueOf(cliente.getFechaRegistro()));
-            ps.setInt(8, cliente.getIdBarrio());
+            ps.setInt(8, cliente.getDireccion().getId());
 
             ps.executeUpdate();
         }catch (SQLException e){
@@ -77,13 +81,25 @@ public class ClienteMySQLRepository implements ClienteService{
 
     @Override
     public List<Cliente> findAllCliente() {
-        String query = "SELECT id,nombre,appellido,edad,fecha_nacimiento,fecha_creacion,"+
-        "id_barrio FROM cliente";
         List<Cliente> clientes = new ArrayList<>();;
         try{    
+            String query = "SELECT c.id,c.id_tipo_documento,c.nombre,c.apellido,c.edad,c.fecha_nacimiento,c.fecha_creacion,"+
+            "d.id AS id_direccion,d.calle_principal,"+
+            "d.interseccion,d.detalles,d.nombre,d.id_ciudad FROM cliente c "+
+            "JOIN direccion d ON d.id = c.id_direccion";
+
             PreparedStatement pStatement = connection.prepareStatement(query);
             ResultSet rs = pStatement.executeQuery();
             while (rs.next()) {
+
+                Direccion direccion = new Direccion();
+                direccion.setId(rs.getInt("id_direccion"));    
+                direccion.setCallePrincipal((rs.getString("calle_principal")));    
+                direccion.setInterseccion((rs.getString("interseccion")));    
+                direccion.setDetalle((rs.getString("detalles")));
+                direccion.setNombre((rs.getString("nombre")));    
+                direccion.setIdCiudad((rs.getInt("id_ciudad")));  
+
                 clientes.add( 
                     new Cliente(
                         rs.getLong("id"),
@@ -91,21 +107,85 @@ public class ClienteMySQLRepository implements ClienteService{
                         rs.getString("nombre"),               
                         rs.getString("apellido"),               
                         rs.getInt("edad"),               
-                        LocalDate.parse(rs.getString("fecha_nacimiento")),               
+                        LocalDate.parse(rs.getString("fecha_nacimiento")),
                         LocalDate.parse(rs.getString("fecha_creacion")),
-                        rs.getInt("id_barrio")               
+                        direccion
                     )
-                
                 );            
             }
 
             return clientes;
 
         }catch(SQLException e){
-
+            e.printStackTrace();
         }
 
         return clientes;
+    }
+
+    @Override
+    public List<ClienteDTO> findAllClientesDTO() {
+
+        // llama el cliente original 
+        List<ClienteDTO> clienteDTOs = new ArrayList<>();
+        try{
+            String query = "SELECT c.id,c.id_tipo_documento,c.nombre,c.apellido,c.edad,c.fecha_nacimiento,"+
+            "c.fecha_creacion,"+
+            "tipo.id AS id_tipo_documento, tipo.nombre AS tipo_nombre, tipo.id_pais AS tipo_id_pais,"+
+            "d.id AS id_direccion, d.nombre AS dnombre,d.calle_principal," + 
+            "d.interseccion,d.detalles,d.id_ciudad,"+
+            "ci.nombre AS cinombre,r.nombre AS rnombre,"+
+            "p.nombre AS pnombre " +
+            "FROM cliente c "+
+            "JOIN tipo_documento tipo ON tipo.id = id_tipo_documento "+
+            "JOIN direccion d ON d.id= c.id_direccion "+
+            "JOIN ciudad ci ON d.id_ciudad = ci.id "+
+            "JOIN region r ON r.id = ci.id_region "+
+            "JOIN pais p ON r.id_pais = p.id ";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Direccion direccion = new Direccion();
+                direccion.setId(rs.getInt("id_direccion"));    
+                direccion.setCallePrincipal((rs.getString("calle_principal")));    
+                direccion.setInterseccion((rs.getString("interseccion")));    
+                direccion.setDetalle((rs.getString("detalles")));
+                direccion.setNombre((rs.getString("dnombre")));    
+                direccion.setIdCiudad((rs.getInt("id_ciudad")));  
+                
+                TipoDocumento tipoDocumento = new TipoDocumento();
+                tipoDocumento.setId(rs.getInt("id_tipo_documento"));
+                tipoDocumento.setTipoDocumento(rs.getString("tipo_nombre"));
+                tipoDocumento.setIdCiudad(rs.getInt("tipo_id_pais"));
+
+
+                ClienteDTO clienteDto = new ClienteDTO(
+                    rs.getLong("id"),
+                    tipoDocumento,
+                    rs.getString("nombre"),               
+                    rs.getString("apellido"),               
+                    rs.getInt("edad"),               
+                    LocalDate.parse(rs.getString("fecha_nacimiento")),
+                    LocalDate.parse(rs.getString("fecha_creacion")),
+                    direccion,
+                    rs.getString("cinombre"),
+                    rs.getString("rnombre"),
+                    rs.getString("pnombre")
+                );
+
+                clienteDTOs.add(clienteDto);
+                
+            }
+
+            return clienteDTOs;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+        return clienteDTOs;
     }
 
 }
